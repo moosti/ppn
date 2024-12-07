@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: ppn-app
+    ports:
+      - 80:80
+    volumes:
+      - ./app:/app
+    depends_on:
+      - db
+    restart: unless-stopped
+  db:
+    image: mariadb:11.3
+    container_name: ppn-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - '3307:3306'
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+  pma:
+    image: phpmyadmin:5.2.1-apache
+    container_name: ppn-pma
+    ports:
+      - 8070:80
+    environment:
+      PMA_HOST: db
+      PMA_ARBITRARY: 1
+      TZ: Asia/Tehran
+      UPLOAD_LIMIT: 64M
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2.5
+    container_name: ppn-redis
+    ports:
+      - 6378:6379
+    restart: unless-stopped
