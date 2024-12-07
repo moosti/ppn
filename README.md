@@ -68,7 +68,7 @@ This guide will help you set up and run the Laravel project using Docker. Follow
 
 ## API Documentation
 
-You can access the API documentation and test the endpoints using the Postman collection available at the given link:
+You can access the API documentation and test the endpoints using the Postman collection available at the given link in email
 
 ## Notes
 
